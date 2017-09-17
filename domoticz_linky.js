@@ -1,6 +1,5 @@
 
 var fs = require('fs');
-var mapValues = require('lodash.mapvalues');
 var winston = require('winston');
 global.logger = winston;
 
