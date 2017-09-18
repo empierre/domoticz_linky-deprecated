@@ -17,7 +17,7 @@
     {
       "name": "Emmanuel PIERRE",
       "email": "domoticz@e-nef.com"
-    },
+    }],
      "license": "GPL-2.0",
   "bugs": {
     "url": "https://github.com/empierre/domoticz_linky/issues"
