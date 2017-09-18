@@ -8,3 +8,7 @@ get Linky smart meter data and push it to domoticz
 ## change login data
 
     nano domoticz_linky.sh
+
+## launch the fleet !
+
+    ./domoticz_linky.sh
