@@ -6,7 +6,8 @@
     "request": "^2.67.0",
     "underscore": "1.4.4",
     "winston": "^1.0.1",
-    "sqlite3": "~2.2.3"
+    "sqlite3": "~2.2.3",
+    "sqlite3-transactions":"0.0.5"
   },
   "repository": {
     "type": "git",
