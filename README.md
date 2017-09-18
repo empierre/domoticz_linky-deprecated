@@ -3,7 +3,7 @@ get Linky smart meter data and push it to domoticz
 
 ## modules to install
 
-    npm install winston
+    npm install winston sqlite3
 
 ## change login data
 
