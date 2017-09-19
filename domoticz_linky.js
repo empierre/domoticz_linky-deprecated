@@ -1,3 +1,20 @@
+//##############################################################################
+//  This file is part of domoticz_linky - https://github.com/empierre/domotics_linky
+//      Copyright (C) 2014-2017 Emmanuel PIERRE (domoticz@e-nef.com)
+//
+//  domoticz_linky is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 2 of the License, or
+//  (at your option) any later version.
+//
+//  MyDomoAtHome is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with MyDomoAtHome.  If not, see <http://www.gnu.org/licenses/>.
+//##############################################################################
 
 var fs = require('fs');
 var winston = require('winston');
@@ -80,13 +97,13 @@ function getCumulBefore(year,month) {
 
 
 logger.add(winston.transports.File, {filename: './lnk95.log'});
-logger.warn(getTotal());
+/*logger.warn(getTotal());
 logger.warn(getYear(2017));
 logger.warn(getMonth(9));
 logger.warn(getMonth(9));
 logger.warn(getDay(14,9));
 logger.warn('update DeviceStatus set lastupdate = \''+q_year+'-'+pad(q_month_e,2)+'-'+pad(q_day_e,2)+' '+'00'+'\' where id = '+devicerowid);
-//logger.warn(getCumulBefore(q_year,q_month_s));
+logger.warn(getCumulBefore(q_year,q_month_s));*/
 generateDay();
 
 

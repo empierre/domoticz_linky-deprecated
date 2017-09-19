@@ -3,13 +3,18 @@ get Linky smart meter data and push it to domoticz
 
 ## modules to install
 
-    apt-get install sqlite3
-    npm install winston sqlite3 sqlite3-transactions
+    sudo apt-get install sqlite3
+    npm install winston 
+    git clone https://github.com/empierre/domoticz_linky.git
 
-## change login data
+## change login data and domoticz path
 
     nano domoticz_linky.sh
 
 ## launch the fleet !
 
     ./domoticz_linky.sh
+
+## Add to your cron tab (with crontab -e):
+
+30 7,12,17,22 * * * cd /home/pi/domoticz_linky/domoticz_linky.sh
