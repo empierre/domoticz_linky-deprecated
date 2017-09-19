@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 //##############################################################################
 //  This file is part of domoticz_linky - https://github.com/empierre/domotics_linky
 //      Copyright (C) 2014-2017 Emmanuel PIERRE (domoticz@e-nef.com)
@@ -17,7 +15,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with MyDomoAtHome.  If not, see <http://www.gnu.org/licenses/>.
 //##############################################################################
->>>>>>> 3aa248368b9db133ecf018984551a9cfad05d6f1
 
 var fs = require('fs');
 var winston = require('winston');
@@ -76,11 +73,7 @@ function generateDay() {
 	for (var i = 0; i < Object.keys(obj).length; ++i) {
 		var req_date=''+q_year+'-'+pad((mth.indexOf(obj[i]["time"].substr(3, 3))+1),2)+'-'+pad(obj[i]["time"].substr(0, 2),2);
 		if (obj[i]["conso"]>0) {
-<<<<<<< HEAD
-			console.log('DELETE FROM \'Meter_Calendar\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter_Calendar\' (DeviceRowID,Value,Counter,Date) VALUES ('+devicerowid+', \''+obj[i]["conso"]+'\', \''+Math.round(cumul*1000)/1000+'\', \''+req_date+'\')') ;
-=======
 			console.log('DELETE FROM \'Meter_Calendar\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter_Calendar\' (DeviceRowID,Value,Counter,Date) VALUES ('+devicerowid+', \''+(obj[i]["conso"]*100)+'\', \''+Math.round(cumul*1000)/1000+'\', \''+req_date+'\');') ;
->>>>>>> 3aa248368b9db133ecf018984551a9cfad05d6f1
 			cumul=cumul+(obj[i]["conso"]);
 		}
 	}
@@ -104,21 +97,13 @@ function getCumulBefore(year,month) {
 
 
 logger.add(winston.transports.File, {filename: './lnk95.log'});
-<<<<<<< HEAD
-logger.warn(getTotal());
-=======
 /*logger.warn(getTotal());
->>>>>>> 3aa248368b9db133ecf018984551a9cfad05d6f1
 logger.warn(getYear(2017));
 logger.warn(getMonth(9));
 logger.warn(getMonth(9));
 logger.warn(getDay(14,9));
 logger.warn('update DeviceStatus set lastupdate = \''+q_year+'-'+pad(q_month_e,2)+'-'+pad(q_day_e,2)+' '+'00'+'\' where id = '+devicerowid);
-<<<<<<< HEAD
-//logger.warn(getCumulBefore(q_year,q_month_s));
-=======
 logger.warn(getCumulBefore(q_year,q_month_s));*/
->>>>>>> 3aa248368b9db133ecf018984551a9cfad05d6f1
 generateDay();
 
 
