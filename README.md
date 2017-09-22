@@ -17,4 +17,4 @@ get Linky smart meter data and push it to domoticz
 
 ## Add to your cron tab (with crontab -e):
 
-30 7,12,17,22 * * * cd /home/pi/domoticz_linky/domoticz_linky.sh
+30 7,12,17,22 * * * /home/pi/domoticz_linky/domoticz_linky.sh
