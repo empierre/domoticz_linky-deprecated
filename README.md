@@ -11,9 +11,19 @@ get Linky smart meter data and push it to domoticz
 
     nano domoticz_linky.sh
 
-## launch the fleet !
+## testing before launch
+
+Manually launch
 
     ./domoticz_linky.sh
+
+N.B. If login is not ok, you'll get a nodejs error on console for data will be missing (will be changed).
+
+Then check the login credential if they are ok:
+
+    linky.log
+
+If this is good, you'll get several json files in the directory
 
 ## Add to your cron tab (with crontab -e):
 
