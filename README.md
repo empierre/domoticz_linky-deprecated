@@ -7,7 +7,7 @@ get Linky smart meter data and push it to domoticz
     npm install winston 
     git clone https://github.com/empierre/domoticz_linky.git
 
-## change login data and domoticz path
+## change login and pass, base dir of this script and domoticz path
 
     nano domoticz_linky.sh
 
