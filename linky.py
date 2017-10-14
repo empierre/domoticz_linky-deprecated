@@ -55,7 +55,7 @@ def login(username, password):
 		'Accept':'application/json, text/javascript, */*; q=0.01'}
 
     req = session.post(LOGIN_BASE_URI + API_ENDPOINT_LOGIN, data=payload, allow_redirects=False)
-    print (session.headers)
+    #print (session.headers)
 
     if not 'iPlanetDirectoryPro' in session.cookies:
         raise LinkyLoginException("Login unsuccessful. Check your credentials.")
