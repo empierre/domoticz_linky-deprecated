@@ -1,6 +1,11 @@
 # domoticz_linky
 get Linky smart meter data and push it to domoticz
 
+# create a device in Domoticz
+In Domoticz, go to hardware, create a virtual "rfx meter counter".
+Then in Devices, add it to the devices. (mark down the id for later).
+When in Utility, edit the device and change it to Electricity type.
+
 ## modules to install
 
     sudo apt-get install sqlite3
@@ -10,6 +15,15 @@ get Linky smart meter data and push it to domoticz
 ## change login and pass, base dir of this script and domoticz path
 
     nano domoticz_linky.sh
+
+and change:
+export LINKY_USERNAME="nom.prenom@mail.com"
+export LINKY_PASSWORD="password"
+
+    nano domoticz_linky.js
+    
+change the devide ID there:
+    var devicerowid=526;
 
 ## testing before launch
 
