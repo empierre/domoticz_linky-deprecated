@@ -135,47 +135,25 @@ def main():
         logging.info("retreiving data...")
         today = datetime.date.today()
         
-        # Years
-        res_year = linky.get_data_per_year(token)
-
-        # 6 months ago - today
-        res_month = linky.get_data_per_month(token, dtostr(today - relativedelta(months=6)), \
-                                             dtostr(today))
-
 
         # One month ago - yesterday
-        res_day = linky.get_data_per_day(token, dtostr(today - relativedelta(days=1, months=1)), \
-                                         dtostr(today - relativedelta(days=1)))
+        res_day = linky.get_data_per_day(token, dtostr(today - relativedelta(days=1, months=sys.argv[0])), \
+                                         dtostr(today - relativedelta(days=sys.argv[0]+1)))
 
 
-        # Yesterday - today
-        res_hour = linky.get_data_per_hour(token, dtostr(today - relativedelta(days=1)), \
-                                           dtostr(today))
         
 
         logging.info("got data!")
 ############################################
 		# Export of the JSON files, with exception handling as Enedis website is not robust and return empty data often
-        try:
-            export_hours_values(res_hour)
-        except Exception as exc:
-        	# logging.info("hours values non exported")
-            logging.error(exc)
+
 
         try:
             export_days_values(res_day)
         except Exception:
             logging.info("days values non exported")
 
-        try:
-            export_months_values(res_month)
-        except Exception:
-            logging.info("months values non exported")
-
-        try:
-            export_years_values(res_year)
-        except Exception:
-        	logging.info("years values non exported")
+      
 
 ############################################
  
