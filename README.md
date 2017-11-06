@@ -2,9 +2,9 @@
 get Linky smart meter data and push it to domoticz
 
 # create a device in Domoticz
-In Domoticz, go to hardware, create a virtual "rfx meter counter".
-Then in Devices, add it to the devices. (mark down the id for later).
-When in Utility, edit the device and change it to Electricity type.
+- In Domoticz, go to hardware, create a virtual "rfx meter counter".
+- Then in Devices, add it to the devices. (mark down the id for later).
+- When in Utility, edit the device and change it to Electricity type.
 
 ## modules to install
 
