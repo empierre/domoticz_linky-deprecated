@@ -96,7 +96,7 @@ def export_days_values(res):
     with open(BASEDIR+"/export_days_values.json", 'w+') as outfile:
         json.dump(days_values, outfile)
 
-# Export the JSON file for monthly consumption (for the current year, starting 6 months from today)
+# Export the JSON file for monthly consumption (for the current year, starting 12 months from today)
 def export_months_values(res):
     months_x_values = generate_x_axis(res, \
                                     'months', "%b", 1)
@@ -134,12 +134,21 @@ def main():
 
         logging.info("retreiving data...")
         today = datetime.date.today()
+        logging.info("arg "+sys.argv[1])
+        mmonth     = int(sys.argv[1])
+        mmonthnext = int(sys.argv[1])+1
+        logging.info(dtostr(today - relativedelta(days=1, months=mmonth)))
+        logging.info(dtostr(today - relativedelta(days=1, months=mmonthnext)))
         
 
-        # One month ago - yesterday
-        res_day = linky.get_data_per_day(token, dtostr(today - relativedelta(days=1, months=sys.argv[0])), \
-                                         dtostr(today - relativedelta(days=sys.argv[0]+1)))
+        # 12 months ago - today
+        res_month = linky.get_data_per_month(token, dtostr(today - relativedelta(months=11)), \
+                                             dtostr(today))
 
+
+        # One month ago - yesterday
+        res_day = linky.get_data_per_day(token, dtostr(today - relativedelta(days=1, months=mmonthnext)), \
+                                         dtostr(today - relativedelta(days=1, months=mmonth)))
 
         
 
@@ -147,13 +156,11 @@ def main():
 ############################################
 		# Export of the JSON files, with exception handling as Enedis website is not robust and return empty data often
 
-
         try:
             export_days_values(res_day)
         except Exception:
             logging.info("days values non exported")
 
-      
 
 ############################################
  
