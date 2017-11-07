@@ -41,4 +41,4 @@ If this is good, you'll get several json files in the directory
 
 ## Add to your cron tab (with crontab -e):
 
-30 7,12,17,22 * * * /home/pi/domoticz_linky/domoticz_linky.sh
+30 7,17 * * * /home/pi/domoticz_linky/domoticz_linky.sh
