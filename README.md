@@ -9,6 +9,7 @@ get Linky smart meter data and push it to domoticz
 ## modules to install
 
     sudo apt-get install sqlite3
+    sudo apt-get install python3 python3-numpy python3-dateutil
     npm install winston 
     git clone https://github.com/empierre/domoticz_linky.git
 
