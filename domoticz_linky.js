@@ -66,20 +66,20 @@ function getDay(day,month) {
 		 if (dm == obj[i]["time"]) return (obj[i]["conso"]);
 	}
 }
-function generateDay() {
+function generateDayHours() {
 	var cumul=getCumulBefore(q_year,q_month_s);
 	var mth=[ 'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-	var obj = JSON.parse(fs.readFileSync('export_days_values.json', 'utf8'));
+	var obj = JSON.parse(fs.readFileSync('export_hours_values.json', 'utf8'));
 	for (var i = 0; i < Object.keys(obj).length; ++i) {
-		var req_date=''+q_year+'-'+pad((mth.indexOf(obj[i]["time"].substr(3, 3))+1),2)+'-'+pad(obj[i]["time"].substr(0, 2),2);
+		var req_date=''+q_year+'-'+q_month_s+'-'+q_day_s+' '+pad(obj[i]["time"].substr(0, 5),5);
 		if (obj[i]["conso"]>0) {
-			console.log('DELETE FROM \'Meter_Calendar\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter_Calendar\' (DeviceRowID,Value,Counter,Date) VALUES ('+devicerowid+', \''+(obj[i]["conso"]*100)+'\', \''+Math.round(cumul*1000)/1000+'\', \''+req_date+'\');') ;
+			console.log('DELETE FROM \'Meter\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter\' (DeviceRowID,Value,Date,Usage) VALUES ('+devicerowid+', \''+Number((obj[i]["conso"]*100).toFixed(2))+'\', \''+Math.round(cumul*1000)/1000+'\', \''+req_date+'\');') ;
 			cumul=cumul+(obj[i]["conso"]);
 		}
 	}
 }
 function getCumulBefore(year,month) {
-
+	// Bring back the year-month previous total as domoticz expect it
 	var obj = JSON.parse(fs.readFileSync('export_years_values.json', 'utf8'));
 	var conso_cumul=0.0;
 	for (var i = 0; i < Object.keys(obj).length; ++i) {
@@ -94,16 +94,22 @@ function getCumulBefore(year,month) {
 	}
 	return(conso_cumul);
 }
+function generateMonthDays() {
+	var cumul=getCumulBefore(q_year,q_month_s);
+	var mth=[ 'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+	var obj = JSON.parse(fs.readFileSync('export_days_values.json', 'utf8'));
+	for (var i = 0; i < Object.keys(obj).length; ++i) {
+		var req_date=''+q_year+'-'+pad((mth.indexOf(obj[i]["time"].substr(3, 3))+1),2)+'-'+pad(obj[i]["time"].substr(0, 2),2);
+		if (obj[i]["conso"]>0) {
+			console.log('DELETE FROM \'Meter_Calendar\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter_Calendar\' (DeviceRowID,Value,Counter,Date) VALUES ('+devicerowid+', \''+Number((obj[i]["conso"]*100).toFixed(2))+'\', \''+Math.round(cumul*1000)/1000+'\', \''+req_date+'\');') ;
+			cumul=cumul+(obj[i]["conso"]);
+		}
+	}
+}
 
 
 logger.add(winston.transports.File, {filename: './lnk95.log'});
-/*logger.warn(getTotal());
-logger.warn(getYear(2017));
-logger.warn(getMonth(9));
-logger.warn(getMonth(9));
-logger.warn(getDay(14,9));
-logger.warn('update DeviceStatus set lastupdate = \''+q_year+'-'+pad(q_month_e,2)+'-'+pad(q_day_e,2)+' '+'00'+'\' where id = '+devicerowid);
-logger.warn(getCumulBefore(q_year,q_month_s));*/
-generateDay();
-
+generateMonthDays();
+generateDayHours();
 

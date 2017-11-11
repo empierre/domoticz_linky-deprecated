@@ -148,9 +148,9 @@ def main():
                                          dtostr(today - relativedelta(days=1)))
 
 
-        # Yesterday - today
-        res_hour = linky.get_data_per_hour(token, dtostr(today - relativedelta(days=1)), \
-                                           dtostr(today))
+        # Yesterday 
+        res_hour = linky.get_data_per_hour(token, dtostr(today - relativedelta(days=2)), \
+                                           dtostr(today - relativedelta(days=1)))
         
 
         logging.info("got data!")
