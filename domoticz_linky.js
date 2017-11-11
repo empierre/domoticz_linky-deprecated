@@ -73,7 +73,7 @@ function generateDayHours() {
 	for (var i = 0; i < Object.keys(obj).length; ++i) {
 		var req_date=''+q_year+'-'+q_month_s+'-'+q_day_s+' '+pad(obj[i]["time"].substr(0, 5),5);
 		if (obj[i]["conso"]>0) {
-			console.log('DELETE FROM \'Meter\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter\' (DeviceRowID,Value,Date,Usage) VALUES ('+devicerowid+', \''+Number((obj[i]["conso"]*100).toFixed(2))+'\', \''+Math.round(cumul*1000)/1000+'\', \''+req_date+'\');') ;
+			console.log('DELETE FROM \'Meter\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter\' (DeviceRowID,Usage,Value,Date) VALUES ('+devicerowid+', \''+Number((obj[i]["conso"]*100).toFixed(2))+'\', \''+Math.round(cumul*1000)/1000+'\', \''+req_date+'\');') ;
 			cumul=cumul+(obj[i]["conso"]);
 		}
 	}
