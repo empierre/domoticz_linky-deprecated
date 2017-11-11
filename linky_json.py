@@ -135,6 +135,12 @@ def main():
         logging.info("retreiving data...")
         today = datetime.date.today()
         
+        # Years
+        res_year = linky.get_data_per_year(token)
+
+        # 12 months ago - today
+        res_month = linky.get_data_per_month(token, dtostr(today - relativedelta(months=11)), \
+                                             dtostr(today))
 
 
         # One month ago - yesterday
@@ -143,8 +149,8 @@ def main():
 
 
         # Yesterday - today
-        res_hour = linky.get_data_per_hour(token, dtostr(today - relativedelta(days=2)), \
-                                           dtostr(today - relativedelta(days=1)))
+        res_hour = linky.get_data_per_hour(token, dtostr(today - relativedelta(days=1)), \
+                                           dtostr(today))
         
 
         logging.info("got data!")
@@ -161,6 +167,15 @@ def main():
         except Exception:
             logging.info("days values non exported")
 
+        try:
+            export_months_values(res_month)
+        except Exception:
+            logging.info("months values non exported")
+
+        try:
+            export_years_values(res_year)
+        except Exception:
+        	logging.info("years values non exported")
 
 ############################################
  
