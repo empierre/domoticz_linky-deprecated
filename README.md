@@ -20,11 +20,9 @@ get Linky smart meter data and push it to domoticz
 and change:
 export LINKY_USERNAME="nom.prenom@mail.com"
 export LINKY_PASSWORD="password"
+BASE_DIR="/home/pi/domoticz/domoticz_linky"
+DOMOTICZ_ID=547
 
-    nano domoticz_linky.js
-    
-change the devide ID there:
-    var devicerowid=526;
 
 ## testing before launch
 
