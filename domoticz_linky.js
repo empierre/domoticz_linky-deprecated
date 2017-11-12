@@ -20,7 +20,7 @@ var fs = require('fs');
 var winston = require('winston');
 global.logger = winston;
 
-var devicerowid=526;
+var devicerowid=process.argv[2];
 var dateObj = new Date();
 var q_year=dateObj.getUTCFullYear();
 var q_month_s=dateObj.getUTCMonth();
