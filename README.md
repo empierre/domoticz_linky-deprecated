@@ -18,6 +18,7 @@ get Linky smart meter data and push it to domoticz
     nano domoticz_linky.sh
 
 and change:
+
     export LINKY_USERNAME="nom.prenom@mail.com"
     export LINKY_PASSWORD="password"
     BASE_DIR="/home/pi/domoticz/domoticz_linky"
