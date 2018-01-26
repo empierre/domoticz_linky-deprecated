@@ -71,9 +71,9 @@ function generateDayHours() {
 	var mth=[ 'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 	var obj = JSON.parse(fs.readFileSync('export_hours_values.json', 'utf8'));
 	for (var i = 0; i < Object.keys(obj).length; ++i) {
-		var req_date=''+q_year+'-'+q_month_e+'-'+q_day_s+' '+pad(obj[i]["time"].substr(0, 5),5)+':00';
+		var req_date=''+q_year+'-'+pad(q_month_e,2)+'-'+pad(q_day_s,2)+' '+pad(obj[i]["time"].substr(0, 5),5)+':00';
 		if (obj[i]["conso"]>0) {
-			console.log('DELETE FROM \'Meter\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter\' (DeviceRowID,Usage,Value,Date) VALUES ('+devicerowid+', \''+Math.round(obj[i]["conso"]*1000)+'\', \''+Math.round(cumul*1000)+'\', \''+req_date+'\');') ;
+			console.log('DELETE FROM \'Meter\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter\' (DeviceRowID,Usage,Value,Date) VALUES ('+devicerowid+', \''+Math.round(obj[i]["conso"]*10000)+'\', \''+Math.round(cumul*1000)+'\', \''+req_date+'\');') ;
 			cumul=cumul+(obj[i]["conso"]);
 		}
 	}
@@ -102,7 +102,7 @@ function generateMonthDays() {
 	for (var i = 0; i < Object.keys(obj).length; ++i) {
 		var req_date=''+q_year+'-'+pad((mth.indexOf(obj[i]["time"].substr(3, 3))+1),2)+'-'+pad(obj[i]["time"].substr(0, 2),2);
 		if (obj[i]["conso"]>0) {
-			console.log('DELETE FROM \'Meter_Calendar\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter_Calendar\' (DeviceRowID,Value,Counter,Date) VALUES ('+devicerowid+', \''+Number((obj[i]["conso"]*100).toFixed(2))+'\', \''+Math.round(cumul*1000)/1000+'\', \''+req_date+'\');') ;
+			console.log('DELETE FROM \'Meter_Calendar\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter_Calendar\' (DeviceRowID,Value,Counter,Date) VALUES ('+devicerowid+', \''+Number((obj[i]["conso"]*1000).toFixed(2))+'\', \''+Math.round(cumul*1000)/1000+'\', \''+req_date+'\');') ;
 			cumul=cumul+(obj[i]["conso"]);
 		}
 	}
