@@ -1,10 +1,9 @@
-# enedis account
+
+# pre-requisite: activate load curve recording on Enedis website
 enable your enedis account (https://espace-client-particuliers.enedis.fr/group/espace-particuliers/) and the data collection ("Consommation" > "Gérer ma courbe de charge" > "Activer ma courbe de charge")
 
 # domoticz_linky
 get Linky smart meter data and push it to domoticz
-
-# pre-requisite: activate load curve recording on Enedis website
 
 # create a device in Domoticz
 - In Domoticz, go to hardware, create a virtual "rfx meter counter".
