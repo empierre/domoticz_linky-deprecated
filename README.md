@@ -1,6 +1,8 @@
 # domoticz_linky
 get Linky smart meter data and push it to domoticz
 
+# pre-requisite: activate load curve recording on Enedis website
+
 # create a device in Domoticz
 - In Domoticz, go to hardware, create a virtual "rfx meter counter".
 - Then in Devices, add it to the devices. (mark down the id for later).
