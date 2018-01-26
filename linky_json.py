@@ -166,6 +166,7 @@ def main():
             export_days_values(res_day)
         except Exception:
             logging.info("days values non exported")
+            sys.exit(70)
 
         try:
             export_months_values(res_month)
