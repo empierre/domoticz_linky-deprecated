@@ -46,3 +46,9 @@ If this is good, you'll get several json files in the directory
 ## Add to your cron tab (with crontab -e):
 
     30 7,17 * * * /home/pi/domoticz_linky/domoticz_linky.sh
+
+## Getting back history
+
+  It is possible to get back history months giving the relative month to get. Parameter is how many month back from today. Limitation: works only on same year at this time.
+
+    ./domoticz_linky_month.sh

@@ -1,7 +1,6 @@
 #!/bin/sh
 export LINKY_USERNAME="nom.prenom@mail.com"
 export LINKY_PASSWORD="password"
-
 DOMOTICZ_ID=547
 BASE_DIR="/home/pi/domoticz/domoticz_linky"
 
