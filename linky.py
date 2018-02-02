@@ -27,6 +27,7 @@ import html
 import sys
 import os
 import logging
+import json
 
 LOGIN_BASE_URI = 'https://espace-client-connexion.enedis.fr'
 API_BASE_URI = 'https://espace-client-particuliers.enedis.fr/group/espace-particuliers'
@@ -124,7 +125,7 @@ def _get_data(session, resource_id, start_date=None, end_date=None):
                                   "then come back.")
 
     try:
-        res = req.json()
+        res = json.loads(req.text)
     except:
         logging.info("Unable to log in")
         sys.exit(os.EX_SOFTWARE)
