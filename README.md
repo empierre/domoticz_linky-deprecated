@@ -1,9 +1,11 @@
+# domoticz_linky
+get Linky smart meter data and push it to domoticz
+
+[![PayPal donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=epierre@e-nef.com&currency_code=EUR&amount=&item_name=thanks "Donate once-off to this project using Paypal")
+
 
 # pre-requisite: activate load curve recording on Enedis website
 enable your enedis account (https://espace-client-particuliers.enedis.fr/group/espace-particuliers/) and the data collection ("Consommation" > "Gérer ma courbe de charge" > "Activer ma courbe de charge")
-
-# domoticz_linky
-get Linky smart meter data and push it to domoticz
 
 # create a device in Domoticz
 - In Domoticz, go to hardware, create a virtual "rfx meter counter".
