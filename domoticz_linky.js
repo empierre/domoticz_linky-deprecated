@@ -1,6 +1,6 @@
 //##############################################################################
 //  This file is part of domoticz_linky - https://github.com/empierre/domotics_linky
-//      Copyright (C) 2014-2017 Emmanuel PIERRE (domoticz@e-nef.com)
+//      Copyright (C) 2014-2019 Emmanuel PIERRE (domoticz@e-nef.com)
 //
 //  domoticz_linky is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
