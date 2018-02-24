@@ -132,7 +132,7 @@ def main():
         token = linky.login(USERNAME, PASSWORD)
         logging.info("logged in successfully!")
 
-        logging.info("retreiving data...")
+        logging.info("retrieving data...")
         today = datetime.date.today()
         
         # Years
