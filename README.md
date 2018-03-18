@@ -24,7 +24,7 @@ enable your enedis account (https://espace-client-particuliers.enedis.fr/group/e
 
 ## rename configuration file, change login/pass/id
 
-    mv _domoticz_linky.cfg domoticz_linky.cfg
+    cp _domoticz_linky.cfg domoticz_linky.cfg
     nano domoticz_linky.cfg
 
 and change:
