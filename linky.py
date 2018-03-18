@@ -123,6 +123,8 @@ def _get_data(session, resource_id, start_date=None, end_date=None):
     if req.status_code == 200 and req.text is not None and "Conditions d'utilisation" in req.text:
         raise LinkyLoginException("You need to accept the latest Terms of Use. Please manually log into the website, "
                                   "then come back.")
+    if req.status_code == 200 and req.text is not None and "Une erreur technique" in req.text:
+        raise LinkyLoginException("A technical error has occurred on website. Data unavailable.")
 
     try:
         res = json.loads(req.text)
