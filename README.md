@@ -16,9 +16,11 @@ enable your enedis account (https://espace-client-particuliers.enedis.fr/group/e
 
     sudo apt-get install sqlite3 node npm
     sudo apt-get install python3 python3-numpy python3-dateutil python3-requests
-    npm install winston
-    cd <whereyouwant>
+## deploy
+    cd <whereyouwant> ie. /home/pi/domoticz/plugins/
     git clone https://github.com/empierre/domoticz_linky.git
+    cd domoticz_linky
+    npm install winston
 
 ## rename configuration file, change login/pass/id
 
@@ -31,7 +33,9 @@ and change:
     LINKY_PASSWORD="password"
     DOMOTICZ_ID=547
     
-Where DOMOTICZ_ID is id device on domoticz
+Where DOMOTICZ_ID is id device on domoticz. 
+
+Configuration file will not be deleted in future updates
 
 
 ## testing before launch
