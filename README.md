@@ -10,7 +10,7 @@ enable your enedis account (https://espace-client-particuliers.enedis.fr/group/e
 # create a device in Domoticz
 - In Domoticz, go to hardware, create a virtual "rfx meter counter" or "Dummy".
 - Then in Devices, add it to the devices. (mark down the id for later).
-- When in Utility, edit the device and change it to Electricity type.
+- When in Utility, edit the device and change it to Electric (instant+counter)  type .
 
 ## modules to install
 
