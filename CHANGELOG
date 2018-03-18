@@ -1,0 +1,4 @@
+v20180318 - arigaud
+  - unique configuration file
+  - unique script to daily/monthly to gets datas
+  - added error when website is on maintenance
