@@ -8,27 +8,34 @@ If you appreciate this software, please show it off ! [![PayPal donate button](h
 enable your enedis account (https://espace-client-particuliers.enedis.fr/group/espace-particuliers/) and the data collection ("Consommation" > "Gérer ma courbe de charge" > "Activer ma courbe de charge")
 
 # create a device in Domoticz
-- In Domoticz, go to hardware, create a virtual "rfx meter counter".
+- In Domoticz, go to hardware, create a virtual "rfx meter counter" or "Dummy".
 - Then in Devices, add it to the devices. (mark down the id for later).
-- When in Utility, edit the device and change it to Electricity type.
+- When in Utility, edit the device and change it to Electric (instant+counter)  type .
 
 ## modules to install
 
-    sudo apt-get install sqlite3
+    sudo apt-get install sqlite3 node npm
     sudo apt-get install python3 python3-numpy python3-dateutil python3-requests
-    npm install winston 
+## deploy
+    cd <whereyouwant> ie. /home/pi/domoticz/plugins/
     git clone https://github.com/empierre/domoticz_linky.git
+    cd domoticz_linky
+    npm install winston
 
-## change login and pass, base dir of this script and domoticz path
+## rename configuration file, change login/pass/id
 
-    nano domoticz_linky.sh
+    cp _domoticz_linky.cfg domoticz_linky.cfg
+    nano domoticz_linky.cfg
 
 and change:
 
-    export LINKY_USERNAME="nom.prenom@mail.com"
-    export LINKY_PASSWORD="password"
-    BASE_DIR="/home/pi/domoticz/domoticz_linky"
+    LINKY_USERNAME="username@mail.com"
+    LINKY_PASSWORD="password"
     DOMOTICZ_ID=547
+    
+Where DOMOTICZ_ID is id device on domoticz. 
+
+Configuration file will not be deleted in future updates
 
 
 ## testing before launch
@@ -41,7 +48,7 @@ N.B. If login is not ok, you'll get a nodejs error on console for data will be m
 
 Then check the login credential if they are ok:
 
-    linky.log
+    domoticz_linky.log
 
 If this is good, you'll get several json files in the directory
 
@@ -53,4 +60,6 @@ If this is good, you'll get several json files in the directory
 
   It is possible to get back history months giving the relative month to get. Parameter is how many month back from today. Limitation: works only on same year at this time.
 
-    ./domoticz_linky_month.sh
+    ./domoticz_linky_month.sh 3
+    
+ On example, 3 months before.
