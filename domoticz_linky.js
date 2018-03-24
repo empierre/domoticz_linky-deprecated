@@ -100,20 +100,29 @@ function getDay(day,month) {
         }
 }
 function generateDayHours() {
-        var cumul=getCumulBefore(q_year,q_month_s);
-        var mth=[ 'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var myDateObj = new Date();
+        myDateObj.setUTCSeconds(0);
+        myDateObj.setUTCMinutes(0);
+        myDateObj.setUTCHours(0);
+        var dateOffset = (24*60*60*1000) * 2; //2 days
+        var dateOffset2 = 30*60*1000; //30 min
+        myDateObj.setTime(myDateObj.getTime() - dateOffset);
+        var cumul=getCumulBefore(myDateObj.getUTCFullYear(),myDateObj.getUTCMonth());
         try {
                 var fileExport = 'export_hours_values.json';
                 var filePath = path.resolve(BASE_DIR, fileExport);
                 var obj = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
+                console.log('DELETE FROM \'Meter\' WHERE devicerowid='+devicerowid+';') ;
                 for (var i = 0; i < Object.keys(obj).length; ++i) {
-                        var req_date=''+q_year+'-'+pad(q_month_e,2)+'-'+pad(q_day_s,2)+' '+pad(obj[i]["time"].substr(0, 5),5)+':00';
+                        var req_date= myDateObj.getUTCFullYear() + "-" + ("0"+(myDateObj.getUTCMonth()+1)).slice(-2) + "-" + ("0" + myDateObj.getUTCDate()).slice(-2) + " " + ("0" + myDateObj.getUTCHours()).slice(-2) + ":" + ("0" + myDateObj.getUTCMinutes()).slice(-2) + ":00";
                         if (obj[i]["conso"]>0) {
-                                console.log('DELETE FROM \'Meter\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter\' (DeviceRowID,Usage,Value,Date) VALUES ('+devicerowid+', \''+Math.round(obj[i]["conso"]*10000/2)+'\', \''+Math.round(cumul*1000)+'\', \''+req_date+'\');') ;
+                                console.log('INSERT INTO \'Meter\' (DeviceRowID,Usage,Value,Date) VALUES ('+devicerowid+', \''+Math.round(obj[i]["conso"]*10000/2)+'\', \''+Math.round(cumul*1000)+'\', \''+req_date+'\');') ;
                                 cumul=cumul+(obj[i]["conso"]/2);
                         }
+                        myDateObj.setTime(myDateObj.getTime() + dateOffset2);
                 }
+                console.log('INSERT INTO \'Meter\' (DeviceRowID,Usage,Value,Date) VALUES ('+devicerowid+', \''+0+'\', \''+Math.round(cumul*1000)+'\', \''+req_date+'\');') ;
         } catch (e) {
                 // It isn't accessible
                 console.log("Exception opening export_hours_values.json : "+e);

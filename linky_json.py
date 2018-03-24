@@ -148,8 +148,8 @@ def main():
                                          dtostr(today - relativedelta(days=1)))
 
 
-        # Yesterday 
-        res_hour = linky.get_data_per_hour(token, dtostr(today - relativedelta(days=1)), \
+        # Yesterday and the day before
+        res_hour = linky.get_data_per_hour(token, dtostr(today - relativedelta(days=2)), \
                                            dtostr(today))
         
 
