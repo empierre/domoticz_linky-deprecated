@@ -117,7 +117,7 @@ function generateDayHours() {
                 for (var i = 0; i+1 < Object.keys(obj).length; i=i+2) {
                         var req_date= myDateObj.getUTCFullYear() + "-" + ("0"+(myDateObj.getUTCMonth()+1)).slice(-2) + "-" + ("0" + myDateObj.getUTCDate()).slice(-2) + " " + ("0" + myDateObj.getUTCHours()).slice(-2) + ":" + ("0" + myDateObj.getUTCMinutes()).slice(-2) + ":00";
                         var conso = (obj[i]["conso"] + obj[i+1]["conso"]) / 2;
-                        if (conso) {
+                        if (conso > 0) {
                                 console.log('INSERT INTO \'Meter\' (DeviceRowID,Usage,Value,Date) VALUES ('+devicerowid+', \''+Math.round(conso*10000/2)+'\', \''+Math.round(cumul*1000)+'\', \''+req_date+'\');') ;
                                 cumul=cumul+conso;
                         }
