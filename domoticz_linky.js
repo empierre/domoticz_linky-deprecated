@@ -105,7 +105,7 @@ function generateDayHours() {
         myDateObj.setUTCMinutes(0);
         myDateObj.setUTCHours(0);
         var dateOffset = (24*60*60*1000) * 2; //2 days
-        var dateOffset2 = 30*60*1000; //30 min
+        var dateOffset2 = 60*60*1000; //60 min
         myDateObj.setTime(myDateObj.getTime() - dateOffset);
         var cumul=getCumulBefore(myDateObj.getUTCFullYear(),myDateObj.getUTCMonth());
         try {
@@ -114,11 +114,12 @@ function generateDayHours() {
                 var obj = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
                 console.log('DELETE FROM \'Meter\' WHERE devicerowid='+devicerowid+';') ;
-                for (var i = 0; i < Object.keys(obj).length; ++i) {
+                for (var i = 0; i+1 < Object.keys(obj).length; i=i+2) {
                         var req_date= myDateObj.getUTCFullYear() + "-" + ("0"+(myDateObj.getUTCMonth()+1)).slice(-2) + "-" + ("0" + myDateObj.getUTCDate()).slice(-2) + " " + ("0" + myDateObj.getUTCHours()).slice(-2) + ":" + ("0" + myDateObj.getUTCMinutes()).slice(-2) + ":00";
-                        if (obj[i]["conso"]>0) {
-                                console.log('INSERT INTO \'Meter\' (DeviceRowID,Usage,Value,Date) VALUES ('+devicerowid+', \''+Math.round(obj[i]["conso"]*10000/2)+'\', \''+Math.round(cumul*1000)+'\', \''+req_date+'\');') ;
-                                cumul=cumul+(obj[i]["conso"]/2);
+                        var conso = (obj[i]["conso"] + obj[i+1]["conso"]) / 2;
+                        if (conso) {
+                                console.log('INSERT INTO \'Meter\' (DeviceRowID,Usage,Value,Date) VALUES ('+devicerowid+', \''+Math.round(conso*10000/2)+'\', \''+Math.round(cumul*1000)+'\', \''+req_date+'\');') ;
+                                cumul=cumul+conso;
                         }
                         myDateObj.setTime(myDateObj.getTime() + dateOffset2);
                 }
@@ -167,12 +168,24 @@ function generateMonthDays() {
                 var fileExport = 'export_days_values.json';
                 var filePath = path.resolve(BASE_DIR, fileExport);
                 var obj = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+                var lastVal = 0;
                 for (var i = 0; i < Object.keys(obj).length; ++i) {
                         var req_date=''+q_year+'-'+pad((mth.indexOf(obj[i]["time"].substr(3, 3))+1),2)+'-'+pad(obj[i]["time"].substr(0, 2),2);
                         if (obj[i]["conso"]>0) {
-                                console.log('DELETE FROM \'Meter_Calendar\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter_Calendar\' (DeviceRowID,Value,Counter,Date) VALUES ('+devicerowid+', \''+Number((obj[i]["conso"]*1000).toFixed(2))+'\', \''+Math.round(cumul*1000)/1000+'\', \''+req_date+'\');') ;
+                                lastVal = Number((obj[i]["conso"]*1000).toFixed(2));
+                                console.log('DELETE FROM \'Meter_Calendar\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter_Calendar\' (DeviceRowID,Value,Counter,Date) VALUES ('+devicerowid+', \''+lastVal+'\', \''+Math.round(cumul*1000)/1000+'\', \''+req_date+'\');') ;
                                 cumul=cumul+(obj[i]["conso"]);
                         }
+                }
+                if (i > 0) {
+                    var myDateObj = new Date();
+                    var dateOffset = (24*60*60*1000) * 1; //1 day
+                    myDateObj.setTime(myDateObj.getTime() + dateOffset);
+                    var req_date= myDateObj.getUTCFullYear() + "-" + ("0"+(myDateObj.getUTCMonth()+1)).slice(-2) + "-" + ("0" + myDateObj.getUTCDate()).slice(-2) + " " + ("0" + myDateObj.getUTCHours()).slice(-2) + ":" + ("0" + myDateObj.getUTCMinutes()).slice(-2) + ":00";
+                    //  prevent device to go red
+                    // Doesn't work well
+                    // console.log('UPDATE DeviceStatus SET LastUpdate=\''+req_date+'\' WHERE ID==\''+ devicerowid+'\';');              
+                    // console.log('UPDATE DeviceStatus SET sValue=\''+lastVal+'\', LastUpdate=\''+req_date+'\' WHERE ID==\''+ devicerowid+'\';');              
                 }
         } catch (e) {
                 // It isn't accessible
