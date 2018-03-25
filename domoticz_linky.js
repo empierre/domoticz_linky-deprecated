@@ -1,6 +1,6 @@
 //##############################################################################
-//  This file is part of domoticz_linky - https://github.com/empierre/domotics_linky
-//      Copyright (C) 2014-2019 Emmanuel PIERRE (domoticz@e-nef.com)
+//  This file is part of domoticz_linky - https://github.com/empierre/domoticz_linky
+//      Copyright (C) 2014-2018 Emmanuel PIERRE (domoticz@e-nef.com)
 //
 //  domoticz_linky is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -108,6 +108,7 @@ function generateDayHours() {
         var dateOffset2 = 60*60*1000; //60 min
         myDateObj.setTime(myDateObj.getTime() - dateOffset);
         var cumul=getCumulBefore(myDateObj.getUTCFullYear(),myDateObj.getUTCMonth());
+
         try {
                 var fileExport = 'export_hours_values.json';
                 var filePath = path.resolve(BASE_DIR, fileExport);
@@ -165,7 +166,7 @@ function getCumulBefore(year,month) {
         }
 }
 function generateMonthDays() {
-        var cumul=getCumulBefore(q_year,q_month_s);
+        var cumul=Number(getCumulBefore(q_year,q_month_s));
         var mth=[ 'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
         try {
