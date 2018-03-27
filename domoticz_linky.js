@@ -114,19 +114,23 @@ function generateDayHours() {
                 var filePath = path.resolve(BASE_DIR, fileExport);
                 var obj = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
+                console.log('BEGIN TRANSACTION;') ;
                 console.log('DELETE FROM \'Meter\' WHERE devicerowid='+devicerowid+';') ;
                 for (var i = 0; i+1 < Object.keys(obj).length; i=i+2) {
+                        myDateObj.setTime(myDateObj.getTime() + dateOffset2);
                         var req_date= myDateObj.getUTCFullYear() + "-" + ("0"+(myDateObj.getUTCMonth()+1)).slice(-2) + "-" + ("0" + myDateObj.getUTCDate()).slice(-2) + " " + ("0" + myDateObj.getUTCHours()).slice(-2) + ":" + ("0" + myDateObj.getUTCMinutes()).slice(-2) + ":00";
                         var conso = (obj[i]["conso"] + obj[i+1]["conso"]) / 2;
                         if (conso > 0) {
                                 console.log('INSERT INTO \'Meter\' (DeviceRowID,Usage,Value,Date) VALUES ('+devicerowid+', \''+Math.round(conso*10000/2)+'\', \''+Math.round(cumul*1000)+'\', \''+req_date+'\');') ;
                                 cumul=cumul+conso;
                         }
-                        myDateObj.setTime(myDateObj.getTime() + dateOffset2);
                 }
+                myDateObj.setTime(myDateObj.getTime() + dateOffset2);
                 console.log('INSERT INTO \'Meter\' (DeviceRowID,Usage,Value,Date) VALUES ('+devicerowid+', \''+0+'\', \''+Math.round(cumul*1000)+'\', \''+req_date+'\');') ;
+                console.log('COMMIT;') ;
         } catch (e) {
                 // It isn't accessible
+                console.log('ROLLBACK;') ;
                 console.log("Exception opening export_hours_values.json : "+e);
         }
 }
@@ -170,6 +174,7 @@ function generateMonthDays() {
                 var filePath = path.resolve(BASE_DIR, fileExport);
                 var obj = JSON.parse(fs.readFileSync(filePath, 'utf8'));
                 var lastVal = 0;
+                console.log('BEGIN TRANSACTION;') ;
                 for (var i = 0; i < Object.keys(obj).length; ++i) {
                         var req_date=''+q_year+'-'+pad((mth.indexOf(obj[i]["time"].substr(3, 3))+1),2)+'-'+pad(obj[i]["time"].substr(0, 2),2);
                         if (obj[i]["conso"]>0) {
@@ -188,8 +193,10 @@ function generateMonthDays() {
                     // console.log('UPDATE DeviceStatus SET LastUpdate=\''+req_date+'\' WHERE ID==\''+ devicerowid+'\';');              
                     // console.log('UPDATE DeviceStatus SET sValue=\''+lastVal+'\', LastUpdate=\''+req_date+'\' WHERE ID==\''+ devicerowid+'\';');              
                 }
+                console.log('COMMIT;') ;
         } catch (e) {
                 // It isn't accessible
+                console.log('ROLLBACK;') ;
                 console.log("Exception opening export_months_values.json : "+e);
         }
 }
