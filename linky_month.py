@@ -29,8 +29,9 @@ USERNAME = os.environ['LINKY_USERNAME']
 PASSWORD = os.environ['LINKY_PASSWORD']
 BASEDIR = os.environ['BASE_DIR']
 
-# Generate y axis (consumption values) 
+
 def generate_y_axis(res):
+    """Generate y axis (consumption values)."""
     y_values = []
 
     # Extract data points from the source dictionary into a list
@@ -46,8 +47,9 @@ def generate_y_axis(res):
 
     return y_values
 
-# Generate x axis (time values)  
+
 def generate_x_axis(res, time_delta_unit, time_format, inc):
+    """Generate x axis (time values)."""
     x_values = []
 
     # Extract start date and parse it
@@ -67,63 +69,69 @@ def generate_x_axis(res, time_delta_unit, time_format, inc):
 
     return x_values
 
-# Date formatting 
+
 def dtostr(date):
+    """Date formatting"""
     return date.strftime("%d/%m/%Y")
 
 
-# Export the JSON file for half-hours power measure (for the last pas day)
 def export_hours_values(res):
-    hours_x_values = generate_x_axis(res, \
-                                    'hours', "%H:%M", 0.5)
+    """Export the JSON file for half-hours power measure (for the last pas day)."""
+    hours_x_values = generate_x_axis(res,
+                                     'hours', "%H:%M", 0.5)
     hours_y_values = generate_y_axis(res)
     hours_values = []
 
-    for i in range(0,len(hours_x_values)):
-        hours_values.append({"time" : hours_x_values[i], "conso" : hours_y_values[i]})
+    for i in range(0, len(hours_x_values)):
+        hours_values.append({"time": hours_x_values[i], "conso": hours_y_values[i]})
     with open(BASEDIR+"/export_hours_values.json", 'w+') as outfile:
         json.dump(hours_values, outfile)
 
-# Export the JSON file for daily consumption (for the past rolling 30 days)
+
 def export_days_values(res):
-    days_x_values = generate_x_axis(res, \
+    """Export the JSON file for daily consumption (for the past rolling 30 days)."""
+    days_x_values = generate_x_axis(res,
                                     'days', "%d %b", 1)
     days_y_values = generate_y_axis(res)
     days_values = []
 
-    for i in range(0,len(days_x_values)):
-        days_values.append({"time" : days_x_values[i], "conso" : days_y_values[i]})
+    for i in range(0, len(days_x_values)):
+        days_values.append({"time": days_x_values[i], "conso": days_y_values[i]})
     with open(BASEDIR+"/export_days_values.json", 'w+') as outfile:
         json.dump(days_values, outfile)
 
-# Export the JSON file for monthly consumption (for the current year, starting 12 months from today)
+
 def export_months_values(res):
-    months_x_values = generate_x_axis(res, \
-                                    'months', "%b", 1)
+    """
+    Export the JSON file for monthly consumption.
+    
+    For the current year, starting 12 months from today.
+    """
+    months_x_values = generate_x_axis(res,
+                                      'months', "%b", 1)
     months_y_values = generate_y_axis(res)
     months_values = []
 
-    for i in range(0,len(months_x_values)):
-        months_values.append({"time" : months_x_values[i], "conso" : months_y_values[i]})
+    for i in range(0, len(months_x_values)):
+        months_values.append({"time": months_x_values[i], "conso": months_y_values[i]})
     with open(BASEDIR+"/export_months_values.json", 'w+') as outfile:
         json.dump(months_values, outfile)
 
-# Export the JSON file for yearly consumption
+
 def export_years_values(res):
-    years_x_values = generate_x_axis(res, \
-                                    'years', "%Y", 1)
+    """Export the JSON file for yearly consumption."""
+    years_x_values = generate_x_axis(res,
+                                     'years', "%Y", 1)
     years_y_values = generate_y_axis(res)
     years_values = []
 
-    for i in range(0,len(years_x_values)):
-        years_values.append({"time" : years_x_values[i], "conso" : years_y_values[i]})
+    for i in range(0, len(years_x_values)):
+        years_values.append({"time": years_x_values[i], "conso": years_y_values[i]})
     with open(BASEDIR+"/export_years_values.json", 'w+') as outfile:
         json.dump(years_values, outfile)
 
 
-
-
-# Main script 
+# Main script
 def main():
     logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 
@@ -135,39 +143,33 @@ def main():
         logging.info("retreiving data...")
         today = datetime.date.today()
         logging.info("arg "+sys.argv[1])
-        mmonth     = int(sys.argv[1])
+        mmonth = int(sys.argv[1])
         mmonthnext = int(sys.argv[1])+1
         logging.info(dtostr(today - relativedelta(days=1, months=mmonth)))
         logging.info(dtostr(today - relativedelta(days=1, months=mmonthnext)))
-        
 
         # 12 months ago - today
-        res_month = linky.get_data_per_month(token, dtostr(today - relativedelta(months=11)), \
+        res_month = linky.get_data_per_month(token, dtostr(today - relativedelta(months=11)),
                                              dtostr(today))
 
-
         # One month ago - yesterday
-        res_day = linky.get_data_per_day(token, dtostr(today - relativedelta(days=1, months=mmonthnext)), \
+        res_day = linky.get_data_per_day(token, dtostr(today - relativedelta(days=1, months=mmonthnext)),
                                          dtostr(today - relativedelta(days=1, months=mmonth)))
 
-        
-
         logging.info("got data!")
-############################################
-		# Export of the JSON files, with exception handling as Enedis website is not robust and return empty data often
+        ############################################
+        # Export of the JSON files, with exception handling as Enedis website is not robust and return empty data often
 
         try:
             export_days_values(res_day)
         except Exception:
             logging.info("days values non exported")
 
+        ############################################
 
-############################################
- 
     except linky.LinkyLoginException as exc:
         logging.error(exc)
         sys.exit(1)
-
 
 
 if __name__ == "__main__":
