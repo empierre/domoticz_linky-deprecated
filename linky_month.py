@@ -91,7 +91,7 @@ def export_hours_values(res):
 def export_days_values(res):
     """Export the JSON file for daily consumption (for the past rolling 30 days)."""
     days_x_values = generate_x_axis(res,
-                                    'days', "%d %b", 1)
+                                    'days', "%d %b %Y", 1)
     days_y_values = generate_y_axis(res)
     days_values = []
 
