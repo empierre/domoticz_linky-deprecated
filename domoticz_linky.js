@@ -179,7 +179,7 @@ function generateMonthDays() {
 			var req_date=''+obj[i]["time"].substr(7, 4)+'-'+pad((mth.indexOf(obj[i]["time"].substr(3, 3))+1),2)+'-'+pad(obj[i]["time"].substr(0, 2),2);
                         if (obj[i]["conso"]>0) {
                                 lastVal = Number((obj[i]["conso"]*1000).toFixed(2));
-				console.log('INSERT OR REPLACE INTO \'Meter_Calendar\' (DeviceRowID,Value,Counter,Date) VALUES ('+devicerowid+', \''+lastVal+'\', \''+Math.round(cumul*1000)/1000+'\', \''+req_date+'\');'); 
+				console.log('DELETE FROM \'Meter_Calendar\' WHERE devicerowid='+devicerowid+' and date = \''+req_date+'\'; INSERT INTO \'Meter_Calendar\' (DeviceRowID,Value,Counter,Date) VALUES ('+devicerowid+', \''+lastVal+'\', \''+Math.round(cumul*1000)/1000+'\', \''+req_date+'\');') ;
                                 cumul=cumul+(obj[i]["conso"]);
                         }
                 }
