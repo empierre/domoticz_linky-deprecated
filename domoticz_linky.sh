@@ -3,7 +3,7 @@
 set -au
 set -e
 
-SCRIPT=$(readlink -f "$0")
+SCRIPT="$0"
 BASE_DIR=$(dirname "${SCRIPT}")
 export BASE_DIR
 CFG_FILE="domoticz_linky.cfg"
