@@ -1,5 +1,7 @@
 #!/bin/sh
+
 set -au
+set -e
 
 SCRIPT=$(readlink -f "$0")
 BASE_DIR=$(dirname "${SCRIPT}")
