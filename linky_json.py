@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Generates energy consumption JSON files from Enedis (ERDF) consumption data
 collected via their  website (API).
