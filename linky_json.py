@@ -75,7 +75,7 @@ def dtostr(date):
     return date.strftime("%d/%m/%Y")
 
 
-def export_hours_values(res):
+def export_hours_values_json(res):
     """Export the JSON file for half-hours power measure (for the last pas day)."""
     hours_x_values = generate_x_axis(res,
                                      'hours', "%H:%M", 0.5)
@@ -84,11 +84,11 @@ def export_hours_values(res):
 
     for i in range(0, len(hours_x_values)):
         hours_values.append({"time": hours_x_values[i], "conso": hours_y_values[i]})
-    with open(BASEDIR+"/export_hours_values.json", 'w+') as outfile:
-        json.dump(hours_values, outfile)
+
+    return hours_values
 
 
-def export_days_values(res):
+def export_days_values_json(res):
     """Export the JSON file for daily consumption (for the past rolling 30 days)."""
     days_x_values = generate_x_axis(res,
                                     'days', "%d %b %Y", 1)
@@ -97,8 +97,8 @@ def export_days_values(res):
 
     for i in range(0, len(days_x_values)):
         days_values.append({"time": days_x_values[i], "conso": days_y_values[i]})
-    with open(BASEDIR+"/export_days_values.json", 'w+') as outfile:
-        json.dump(days_values, outfile)
+
+    return days_values
 
 
 def export_months_values(res):
@@ -114,11 +114,11 @@ def export_months_values(res):
 
     for i in range(0, len(months_x_values)):
         months_values.append({"time": months_x_values[i], "conso": months_y_values[i]})
-    with open(BASEDIR+"/export_months_values.json", 'w+') as outfile:
-        json.dump(months_values, outfile)
+
+    return months_values
 
 
-def export_years_values(res):
+def export_years_values_json(res):
     """Export the JSON file for yearly consumption."""
     years_x_values = generate_x_axis(res,
                                      'years', "%Y", 1)
@@ -127,6 +127,30 @@ def export_years_values(res):
 
     for i in range(0, len(years_x_values)):
         years_values.append({"time": years_x_values[i], "conso": years_y_values[i]})
+
+    return years_values
+
+
+def export_hours_values(res):
+    hours_values = export_hours_values_json(res)
+    with open(BASEDIR+"/export_hours_values.json", 'w+') as outfile:
+        json.dump(hours_values, outfile)
+
+
+def export_days_values(res):
+    days_values = export_days_values_json(res)
+    with open(BASEDIR+"/export_days_values.json", 'w+') as outfile:
+        json.dump(days_values, outfile)
+
+
+def export_months_values(res):
+    months_values = export_months_values_json(res)
+    with open(BASEDIR+"/export_months_values.json", 'w+') as outfile:
+        json.dump(months_values, outfile)
+
+
+def export_years_values(res):
+    years_values = export_years_values_json(res)
     with open(BASEDIR+"/export_years_values.json", 'w+') as outfile:
         json.dump(years_values, outfile)
 
