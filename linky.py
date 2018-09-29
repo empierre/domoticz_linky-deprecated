@@ -139,7 +139,7 @@ def _get_data(session, resource_id, start_date=None, end_date=None):
         logging.info("Unable to log in")
         sys.exit(os.EX_SOFTWARE)
 
-    if res['etat'] and res['etat']['valeur'] == 'erreur' and res['etat']['erreurText']:
-        raise LinkyServiceException(html.unescape(res['etat']['erreurText']))
+    if res['etat'] and res['etat']['valeur'] == 'erreur':
+        raise LinkyServiceException(html.unescape(res['etat']))
 
     return res
