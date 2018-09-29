@@ -76,9 +76,13 @@ def dtostr(date):
 
 
 def export_hours_values_json(res):
+    return export_hours_values_json_format(res, "%H:%M")
+
+
+def export_hours_values_json_format(res, date_format):
     """Export the JSON file for half-hours power measure (for the last pas day)."""
     hours_x_values = generate_x_axis(res,
-                                     'hours', "%H:%M", 0.5)
+                                     'hours', date_format, 0.5)
     hours_y_values = generate_y_axis(res)
     hours_values = []
 
@@ -89,9 +93,13 @@ def export_hours_values_json(res):
 
 
 def export_days_values_json(res):
+    return export_days_values_json_format(res, "%d %b %Y")
+
+
+def export_days_values_json_format(res, date_format):
     """Export the JSON file for daily consumption (for the past rolling 30 days)."""
     days_x_values = generate_x_axis(res,
-                                    'days', "%d %b %Y", 1)
+                                    'days', date_format, 1)
     days_y_values = generate_y_axis(res)
     days_values = []
 
