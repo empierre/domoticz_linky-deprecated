@@ -127,11 +127,11 @@ def _get_data(session, resource_id, start_date=None, end_date=None):
         req = session.post(API_BASE_URI + API_ENDPOINT_DATA,
                            allow_redirects=False, data=payload, params=params)
 
-    if req.status_code == 200 and req.text is not None and "Conditions d'utilisation" in req.text:
-        raise LinkyLoginException("You need to accept the latest Terms of Use. Please manually log into the website, "
-                                  "then come back.")
-    if req.status_code == 200 and req.text is not None and "Une erreur technique" in req.text:
-        raise LinkyLoginException("A technical error has occurred on website. Data unavailable.")
+    if req.status_code == 200 and req.text is not None:
+        if "Conditions d'utilisation" in req.text:
+            raise LinkyLoginException("You need to accept the latest Terms of Use. Please manually log into the website, then come back.")
+        if "Une erreur technique" in req.text:
+            raise LinkyLoginException("A technical error has occurred on website. Data unavailable.")
 
     try:
         res = json.loads(req.text)
@@ -139,7 +139,7 @@ def _get_data(session, resource_id, start_date=None, end_date=None):
         logging.info("Unable to log in")
         sys.exit(os.EX_SOFTWARE)
 
-    if res['etat'] and res['etat']['valeur'] == 'erreur' and res['etat']['erreurText']:
-        raise LinkyServiceException(html.unescape(res['etat']['erreurText']))
+    if res['etat'] and res['etat']['valeur'] == 'erreur':
+        raise LinkyServiceException(html.unescape(res['etat']))
 
     return res

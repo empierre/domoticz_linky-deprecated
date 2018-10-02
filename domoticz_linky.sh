@@ -1,7 +1,9 @@
 #!/bin/sh
-set -au
 
-SCRIPT=$(readlink -f "$0")
+set -au
+set -e
+
+SCRIPT="$0"
 BASE_DIR=$(dirname "${SCRIPT}")
 export BASE_DIR
 CFG_FILE="domoticz_linky.cfg"
@@ -25,7 +27,7 @@ update_db () {
      PY_SCRIPT="linky_month.py"
   fi
   PY_SCRIPT="${BASE_DIR}"/"${PY_SCRIPT}"
-  /usr/bin/python3 "${PY_SCRIPT}" $1 -o "${BASE_DIR}" >> "${BASE_DIR}"/"${LOG_FILE}" 2>&1
+  "${PY_SCRIPT}" $1 -o "${BASE_DIR}" >> "${BASE_DIR}"/"${LOG_FILE}" 2>&1
   if  [ $? -eq 0 ]; then
     BASE_DIR="${BASE_DIR}" /usr/bin/nodejs "${BASE_DIR}"/domoticz_linky.js "${DOMOTICZ_ID}" > "${BASE_DIR}"/req.sql
      cat "${BASE_DIR}"/req.sql | /usr/bin/sqlite3 "${HOME}"/domoticz/domoticz.db
