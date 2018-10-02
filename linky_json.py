@@ -27,7 +27,6 @@ from dateutil.relativedelta import relativedelta
 
 USERNAME = os.environ['LINKY_USERNAME']
 PASSWORD = os.environ['LINKY_PASSWORD']
-BASEDIR = os.environ['BASE_DIR']
 
 
 def generate_y_axis(res):
@@ -141,24 +140,28 @@ def export_years_values_json(res):
 
 def export_hours_values(res):
     hours_values = export_hours_values_json(res)
+    BASEDIR = os.environ['BASE_DIR']
     with open(BASEDIR+"/export_hours_values.json", 'w+') as outfile:
         json.dump(hours_values, outfile)
 
 
 def export_days_values(res):
     days_values = export_days_values_json(res)
+    BASEDIR = os.environ['BASE_DIR']
     with open(BASEDIR+"/export_days_values.json", 'w+') as outfile:
         json.dump(days_values, outfile)
 
 
 def export_months_values(res):
     months_values = export_months_values_json(res)
+    BASEDIR = os.environ['BASE_DIR']
     with open(BASEDIR+"/export_months_values.json", 'w+') as outfile:
         json.dump(months_values, outfile)
 
 
 def export_years_values(res):
     years_values = export_years_values_json(res)
+    BASEDIR = os.environ['BASE_DIR']
     with open(BASEDIR+"/export_years_values.json", 'w+') as outfile:
         json.dump(years_values, outfile)
 
