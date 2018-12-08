@@ -1,0 +1,7 @@
+*.swp
+domoticz_linky.cfg
+domoticz_linky.log
+export_days_values.json
+export_hours_values.json
+export_months_values.json
+export_years_values.json
