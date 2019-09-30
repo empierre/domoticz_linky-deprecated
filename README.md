@@ -20,7 +20,7 @@ enable your enedis account (https://espace-client-particuliers.enedis.fr/group/e
     cd <whereyouwant> ie. /home/pi/domoticz/plugins/
     git clone https://github.com/empierre/domoticz_linky.git
     cd domoticz_linky
-    npm install winston
+    npm install winston@2.4.2
 
 ## rename configuration file, change login/pass/id
 
