@@ -114,8 +114,7 @@ def _get_data(session, resource_id, start_date=None, end_date=None):
         'p_p_resource_id': resource_id,
         'p_p_cacheability': 'cacheLevelPage',
         'p_p_col_id': 'column-1',
-        'p_p_col_pos': 1,
-        'p_p_col_count': 3
+        'p_p_col_count': 2
     }
 
     req = session.post(API_BASE_URI + API_ENDPOINT_DATA,
@@ -138,7 +137,8 @@ def _get_data(session, resource_id, start_date=None, end_date=None):
     except:
         logging.info("Unable to log in")
         sys.exit(os.EX_SOFTWARE)
-
+    # logging.info(resource_id+" ")
+    # logging.info(res)
     if res['etat'] and res['etat']['valeur'] == 'erreur':
         raise LinkyServiceException(html.unescape(res['etat']))
 
