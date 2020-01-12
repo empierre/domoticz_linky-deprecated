@@ -9,7 +9,7 @@ enable your enedis account (https://espace-client-particuliers.enedis.fr/group/e
 
 # create a device in Domoticz
 - In Domoticz, go to hardware, create a virtual "rfx meter counter" or "Dummy".
-- Then in Devices, add it to the devices. (mark down the id for later).
+- Then in Devices, add it to the devices. (mark down the Idx for later, not the ID).
 - When in Utility, edit the device and change it to Electric (instant+counter)  type .
 
 ## modules to install
@@ -33,7 +33,7 @@ and change:
     LINKY_PASSWORD="password"
     DOMOTICZ_ID=547
     
-Where DOMOTICZ_ID is id device on domoticz. 
+Where DOMOTICZ_ID is Idx device on domoticz. 
 
 Configuration file will not be deleted in future updates
 
@@ -60,6 +60,6 @@ If this is good, you'll get several json files in the directory
 
   It is possible to get back history months giving the relative month to get. Parameter is how many month back from today. Limitation: works only on same year at this time.
 
-    ./domoticz_linky_month.sh 3
+    ./domoticz_linky.sh 3
     
  On example, 3 months before.
