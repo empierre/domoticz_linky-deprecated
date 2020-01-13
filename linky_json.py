@@ -108,7 +108,7 @@ def export_days_values_json_format(res, date_format):
     return days_values
 
 
-def export_months_values(res):
+def export_months_values_json(res):
     """
     Export the JSON file for monthly consumption.
     
