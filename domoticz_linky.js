@@ -29,6 +29,8 @@ var q_month_s=dateObj.getUTCMonth();
 var q_month_e=dateObj.getUTCMonth() + 1;
 var q_day_s=dateObj.getUTCDate()-1;
 var q_day_e=dateObj.getUTCDate();
+var q_hour=dateObj.getUTCHours();
+var q_minutes=dateObj.getUTCMinutes();
 
 var BASE_DIR = process.env.BASE_DIR || '/home/pi/domoticz/domoticz_linky';
 
@@ -205,3 +207,5 @@ function generateMonthDays() {
 logger.add(winston.transports.File, {filename: './lnk95.log'});
 generateMonthDays();
 generateDayHours();
+var req_date=''+q_year+'-'+pad(q_month_e,2)+'-'+pad(q_day_s,2)+' '+pad(q_hour,2)+':'+pad(q_minutes,2)+':00';
+console.log('UPDATE DeviceStatus SET lastupdate = \''+req_date+'\' WHERE id = '+devicerowid+';');
